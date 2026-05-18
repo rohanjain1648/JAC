@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyZenn — Your AI Mental Health Companion</title>
+    <meta name="description" content="MyZenn is an agentic AI mental health companion that provides empathetic support using CBT, DBT, and mindfulness techniques.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+
+    <!-- Crisis Banner -->
+    <div id="crisis-banner" class="crisis-banner hidden">
+        <div class="crisis-content">
+            <span class="crisis-icon">🚨</span>
+            <span>If you're in crisis: <strong>Call/Text 988</strong> | Crisis Text Line: <strong>Text HOME to 741741</strong> | Emergency: <strong>911</strong></span>
+            <span class="crisis-icon">❤️</span>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+        
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">🧘</div>
+                    <div class="logo-text">
+                        <h1>MyZenn</h1>
+                        <span class="logo-subtitle">AI Mental Health Companion</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <button id="nav-chat" class="nav-item active" onclick="switchView('chat')">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-label">Chat</span>
+                </button>
+                <button id="nav-mood" class="nav-item" onclick="switchView('mood')">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Mood Tracker</span>
+                </button>
+                <button id="nav-journal" class="nav-item" onclick="switchView('journal')">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-label">Journal</span>
+                </button>
+                <button id="nav-breathe" class="nav-item" onclick="switchView('breathe')">
+                    <span class="nav-icon">🌬️</span>
+                    <span class="nav-label">Breathe</span>
+                </button>
+                <button id="nav-strategies" class="nav-item" onclick="switchView('strategies')">
+                    <span class="nav-icon">🧠</span>
+                    <span class="nav-label">Coping Tools</span>
+                </button>
+                <button id="nav-profile" class="nav-item" onclick="switchView('profile')">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-label">Profile</span>
+                </button>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="mood-ring-mini" id="mood-ring-mini">
+                    <div class="mood-ring-value" id="mood-ring-value">5</div>
+                </div>
+                <p class="mood-ring-label">Current Mood</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Chat View -->
+            <div id="view-chat" class="view active">
+                <div class="chat-container">
+                    <div class="chat-header glass-card">
+                        <div class="chat-header-info">
+                            <div class="agent-avatar pulse-glow">🧘</div>
+                            <div>
+                                <h2>MyZenn</h2>
+                                <span class="agent-status">
+                                    <span class="status-dot"></span>
+                                    Ready to listen
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chat-header-actions">
+                            <button class="icon-btn" onclick="clearChat()" title="Clear Chat" id="clear-chat-btn">🗑️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message assistant fade-in">
+                            <div class="message-avatar">🧘</div>
+                            <div class="message-content glass-card">
+                                <p>Hello! I'm <strong>MyZenn</strong>, your AI mental health companion. 💙</p>
+                                <p>I'm here to provide empathetic support using evidence-based techniques like CBT, DBT, and mindfulness. I can help you:</p>
+                                <ul>
+                                    <li>💭 Process your thoughts and feelings</li>
+                                    <li>📊 Track your mood patterns</li>
+                                    <li>🧘 Practice breathing exercises</li>
+                                    <li>📝 Reflect through journaling</li>
+                                    <li>🧠 Learn coping strategies</li>
+                                </ul>
+                                <p><em>Remember: I'm not a replacement for professional help, but I'm always here when you need someone to talk to.</em></p>
+                                <p>How are you feeling today?</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <div class="chat-input-container glass-card">
+                            <textarea id="chat-input" placeholder="Share what's on your mind..." rows="1" onkeydown="handleKeyDown(event)"></textarea>
+                            <button id="send-btn" class="send-btn" onclick="sendMessage()">
+                                <span class="send-icon">➤</span>
+                            </button>
+                        </div>
+                        <p class="disclaimer">MyZenn uses AI to provide support. Not a substitute for professional care.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mood Tracker View -->
+            <div id="view-mood" class="view">
+                <div class="view-header">
+                    <h2>📊 Mood Tracker</h2>
+                    <p>Track your emotional journey over time</p>
+                </div>
+                
+                <div class="mood-grid">
+                    <!-- Quick Mood Log -->
+                    <div class="glass-card mood-log-card">
+                        <h3>How are you feeling right now?</h3>
+                        <div class="mood-slider-container">
+                            <input type="range" id="mood-slider" min="1" max="10" value="5" class="mood-slider" oninput="updateMoodSlider()">
+                            <div class="mood-slider-labels">
+                                <span>😢 1</span>
+                                <span>😐 5</span>
+                                <span>😊 10</span>
+                            </div>
+                            <div class="mood-slider-value" id="mood-slider-display">5</div>
+                        </div>
+                        <div class="emotion-chips" id="emotion-chips">
+                            <button class="chip" onclick="toggleChip(this)">😟 Anxious</button>
+                            <button class="chip" onclick="toggleChip(this)">😢 Sad</button>
+                            <button class="chip" onclick="toggleChip(this)">😡 Angry</button>
+                            <button class="chip" onclick="toggleChip(this)">😰 Stressed</button>
+                            <button class="chip" onclick="toggleChip(this)">😌 Calm</button>
+                            <button class="chip" onclick="toggleChip(this)">😊 Happy</button>
+                            <button class="chip" onclick="toggleChip(this)">🥱 Tired</button>
+                            <button class="chip" onclick="toggleChip(this)">💪 Motivated</button>
+                            <button class="chip" onclick="toggleChip(this)">🤗 Grateful</button>
+                            <button class="chip" onclick="toggleChip(this)">😔 Lonely</button>
+                        </div>
+                        <button class="primary-btn" onclick="logMood()" id="log-mood-btn">Log Mood</button>
+                    </div>
+
+                    <!-- Mood Chart -->
+                    <div class="glass-card mood-chart-card">
+                        <h3>Mood History</h3>
+                        <div class="mood-chart" id="mood-chart">
+                            <div class="chart-placeholder">
+                                <span>📈</span>
+                                <p>Start tracking to see your mood trends</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="glass-card stats-card">
+                        <h3>Your Stats</h3>
+                        <div class="stats-grid" id="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="stat-avg-mood">5.0</div>
+                                <div class="stat-label">Avg Mood</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="stat-streak">0</div>
+                                <div class="stat-label">Day Streak</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="stat-entries">0</div>
+                                <div class="stat-label">Total Logs</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="stat-sessions">0</div>
+                                <div class="stat-label">Sessions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journal View -->
+            <div id="view-journal" class="view">
+                <div class="view-header">
+                    <h2>📝 Journal</h2>
+                    <p>Express your thoughts and feelings freely</p>
+                </div>
+                
+                <div class="journal-container">
+                    <div class="glass-card journal-write-card">
+                        <h3>Write an Entry</h3>
+                        <textarea id="journal-input" class="journal-textarea" placeholder="What's on your mind today? Write freely — this is your safe space..."></textarea>
+                        <button class="primary-btn" onclick="saveJournal()" id="save-journal-btn">Save & Analyze</button>
+                    </div>
+                    
+                    <div class="glass-card journal-entries-card">
+                        <h3>Past Entries</h3>
+                        <div id="journal-entries" class="journal-entries">
+                            <div class="empty-state">
+                                <span>📓</span>
+                                <p>No journal entries yet. Start writing to track your thoughts.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breathing Exercise View -->
+            <div id="view-breathe" class="view">
+                <div class="view-header">
+                    <h2>🌬️ Breathing Exercise</h2>
+                    <p>Box Breathing — used by Navy SEALs to reduce stress</p>
+                </div>
+                
+                <div class="breathe-container">
+                    <div class="breathe-circle-wrapper">
+                        <div class="breathe-circle" id="breathe-circle">
+                            <div class="breathe-inner">
+                                <div class="breathe-text" id="breathe-text">Press Start</div>
+                                <div class="breathe-timer" id="breathe-timer">4:00</div>
+                            </div>
+                        </div>
+                        <svg class="breathe-progress" viewBox="0 0 200 200">
+                            <circle class="breathe-progress-track" cx="100" cy="100" r="90"/>
+                            <circle class="breathe-progress-bar" id="breathe-progress-bar" cx="100" cy="100" r="90"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="breathe-controls">
+                        <button class="primary-btn breathe-start-btn" id="breathe-start-btn" onclick="toggleBreathing()">
+                            ▶ Start
+                        </button>
+                        <div class="breathe-info glass-card">
+                            <p><strong>How it works:</strong></p>
+                            <div class="breathe-steps">
+                                <span class="breathe-step" style="--step-color: #6C63FF">Breathe In (4s)</span>
+                                <span class="breathe-step" style="--step-color: #4ECDC4">Hold (4s)</span>
+                                <span class="breathe-step" style="--step-color: #45B7D1">Breathe Out (4s)</span>
+                                <span class="breathe-step" style="--step-color: #96CEB4">Hold (4s)</span>
+                            </div>
+                            <p class="breathe-cycles">4 cycles • 64 seconds total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coping Strategies View -->
+            <div id="view-strategies" class="view">
+                <div class="view-header">
+                    <h2>🧠 Coping Strategies</h2>
+                    <p>Evidence-based techniques for managing difficult moments</p>
+                </div>
+                
+                <div class="strategies-container">
+                    <div class="strategy-category">
+                        <h3 class="category-title">
+                            <span class="category-icon">💡</span> Cognitive Behavioral Therapy (CBT)
+                        </h3>
+                        <div class="strategy-cards" id="cbt-strategies">
+                            <div class="glass-card strategy-card">
+                                <h4>Cognitive Restructuring</h4>
+                                <p>Identify and challenge negative thought patterns, replacing them with balanced alternatives.</p>
+                                <div class="strategy-tag">Thoughts</div>
+                            </div>
+                            <div class="glass-card strategy-card">
+                                <h4>Behavioral Activation</h4>
+                                <p>Schedule pleasurable and meaningful activities to combat depression and withdrawal.</p>
+                                <div class="strategy-tag">Actions</div>
+                            </div>
+                            <div class="glass-card strategy-card">
+                                <h4>Thought Record</h4>
+                                <p>Document triggering situations, automatic thoughts, emotions, and alternative perspectives.</p>
+                                <div class="strategy-tag">Writing</div>
+                            </div>
+                            <div class="glass-card strategy-card">
+                                <h4>Graded Exposure</h4>
+                                <p>Gradually face feared situations in a structured, manageable way.</p>
+                                <div class="strategy-tag">Anxiety</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="strategy-category">
+                        <h3 class="category-title">
+                            <span class="category-icon">⚡</span> Dialectical Behavior Therapy (DBT)
+                        </h3>
+                        <div class="strategy-cards">
+                            <div class="glass-card strategy-card">
+                                <h4>TIPP Skills</h4>
+                                <p>Temperature, Intense exercise, Paced breathing, Paired muscle relaxation for crisis moments.</p>
+                                <div class="strategy-tag">Crisis</div>
+                            </div>
+                            <div class="glass-card strategy-card">
+                                <h4>STOP Skill</h4>
+                                <p>Stop, Take a step back, Observe, Proceed mindfully when emotions are overwhelming.</p>
+                                <div class="strategy-tag">Regulation</div>
+                            </div>
+                            <div class="glass-card strategy-card">
+                                <h4>Radical Acceptance</h4>
+                                <p>Accept reality as it is without judgment, reducing suffering caused by fighting the unchangeable.</p>
+                                <div class="strategy-tag">Acceptance</div>
+                            </div>
+                            <div class="glass-card strategy-card">
+                                <h4>Opposite Action</h4>
+                                <p>Act opposite to the emotion-driven urge when the emotion doesn't fit the facts.</p>
+                                <div class="strategy-tag">Behavior</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="strategy-category">
+                        <h3 class="category-title">
+                            <span class="category-icon">🧘</span> Mindfulness
+                        </h3>
+                        <div class="strategy-cards">
+                            <div class="glass-card strategy-card">
+                                <h4>Box Breathing</h4>
+                                <p>Breathe in 4 seconds, hold 4 seconds, out 4 seconds, hold 4 seconds. Repeat 4 cycles.</p>
+                                <div class="strategy-tag">Breathing</div>
+                            </div>
+                            <div class="glass-card strategy-card">
+                                <h4>Body Scan</h4>
+                                <p>Progressive attention from toes to head, noticing sensations without judgment.</p>
+                                <div class="strategy-tag">Awareness</div>
+                            </div>
+                            <div class="glass-card strategy-card">
+                                <h4>5-4-3-2-1 Grounding</h4>
+                                <p>Name 5 things you see, 4 you hear, 3 you touch, 2 you smell, 1 you taste.</p>
+                                <div class="strategy-tag">Grounding</div>
+                            </div>
+                            <div class="glass-card strategy-card">
+                                <h4>Mindful Breathing</h4>
+                                <p>Focus on natural breath rhythm, gently returning attention when the mind wanders.</p>
+                                <div class="strategy-tag">Focus</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile View -->
+            <div id="view-profile" class="view">
+                <div class="view-header">
+                    <h2>👤 Your Profile</h2>
+                    <p>Personalize your MyZenn experience</p>
+                </div>
+                
+                <div class="profile-container">
+                    <div class="glass-card profile-card">
+                        <div class="profile-avatar-section">
+                            <div class="profile-avatar">🧘</div>
+                            <h3 id="profile-name-display">Friend</h3>
+                        </div>
+                        
+                        <div class="profile-form">
+                            <div class="form-group">
+                                <label for="profile-name">Your Name</label>
+                                <input type="text" id="profile-name" placeholder="What should I call you?" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Your Goals</label>
+                                <div class="goals-chips" id="goals-chips">
+                                    <button class="chip goal-chip" onclick="toggleChip(this)">Reduce Anxiety</button>
+                                    <button class="chip goal-chip" onclick="toggleChip(this)">Better Sleep</button>
+                                    <button class="chip goal-chip" onclick="toggleChip(this)">Manage Stress</button>
+                                    <button class="chip goal-chip" onclick="toggleChip(this)">Improve Mood</button>
+                                    <button class="chip goal-chip" onclick="toggleChip(this)">Build Confidence</button>
+                                    <button class="chip goal-chip" onclick="toggleChip(this)">Process Grief</button>
+                                    <button class="chip goal-chip" onclick="toggleChip(this)">Mindfulness</button>
+                                    <button class="chip goal-chip" onclick="toggleChip(this)">Self-Care</button>
+                                </div>
+                            </div>
+                            
+                            <button class="primary-btn" onclick="saveProfile()" id="save-profile-btn">Save Profile</button>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card about-card">
+                        <h3>About MyZenn</h3>
+                        <p>MyZenn is an <strong>agentic AI mental health companion</strong> built with <strong>Jac (Jaseci)</strong> — an AI-native programming language.</p>
+                        <div class="tech-badges">
+                            <span class="tech-badge">Jac/Jaseci</span>
+                            <span class="tech-badge">byLLM</span>
+                            <span class="tech-badge">ReAct Agent</span>
+                            <span class="tech-badge">Graph Memory</span>
+                            <span class="tech-badge">CBT/DBT</span>
+                            <span class="tech-badge">FastAPI</span>
+                        </div>
+                        <p class="about-features">
+                            <strong>Agentic Features:</strong><br>
+                            ✅ Multi-step reasoning (ReAct pattern)<br>
+                            ✅ Tool calling (7+ domain tools)<br>
+                            ✅ Persistent graph memory (nodes & walkers)<br>
+                            ✅ Session planning & mood tracking<br>
+                            ✅ Crisis detection & safety protocols<br>
+                            ✅ Personalized coping strategies
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Nav Toggle -->
+    <button class="mobile-nav-toggle" id="mobile-nav-toggle" onclick="toggleSidebar()">☰</button>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
