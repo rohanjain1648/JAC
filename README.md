@@ -12,9 +12,9 @@
 
 ## 🏗️ Architecture
 
-- **Backend Logic**: `main.jac` contains the core nodes, edges, walkers, and tool definitions.
-- **API Server**: `server.py` uses FastAPI to expose the Jac agent to the web frontend, with a fallback to direct OpenAI API usage if Jac is not fully installed.
-- **Frontend**: Vanilla HTML/CSS/JS (`frontend/`) for an ultra-fast, premium user experience.
+- **Backend Logic**: [main.jac](file:///d:/downloads/JAC/main.jac) contains the core nodes, edges, walkers, and tool definitions.
+- **API Server**: [server.py](file:///d:/downloads/JAC/server.py) uses FastAPI to expose the Jac agent to the web frontend, with a fallback to direct Gemini API usage if Jac is not fully installed.
+- **Frontend**: Vanilla HTML/CSS/JS ([frontend/](file:///d:/downloads/JAC/frontend)) for an ultra-fast, premium user experience.
 
 ## 🚀 Setup & Installation
 
@@ -29,9 +29,10 @@ pip install jaclang byllm
 ```
 
 ### 2. Configure Environment
-Rename `.env.example` to `.env` and add your OpenAI API key:
+Rename `.env.example` to `.env` and add your Gemini API key:
 ```env
-OPENAI_API_KEY=sk-your-key-here
+GEMINI_API_KEY=your_gemini_api_key_here
+LLM_MODEL=gemini-1.5-flash
 ```
 
 ### 3. Run the Server
