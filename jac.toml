@@ -1,0 +1,11 @@
+[project]
+name = "myzenn"
+version = "1.0.0"
+description = "MyZenn — Agentic Mental Health Companion"
+authors = ["Jac Developer"]
+
+[llm]
+# To use OpenAI, set OPENAI_API_KEY environment variable
+provider = "openai"
+model = "gpt-4o-mini"
+temperature = 0.7
